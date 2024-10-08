@@ -8,17 +8,86 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tvBaseLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:rotation="21"
-        android:rotationX="46"
-        android:rotationY="37"
-        android:scaleX="3"
-        android:scaleY="3"
-        android:text="Yarr harr"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:text="Base"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tvTipPercentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="24%"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tvBaseLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvBaseLabel" />
+
+    <TextView
+        android:id="@+id/tvTipLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Tip"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="@+id/tvTipPercentLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvTipPercentLabel" />
+
+    <TextView
+        android:id="@+id/tvTotalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Total"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="@+id/tvTipLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvTipLabel" />
+
+    <EditText
+        android:id="@+id/etBaseAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:ems="8"
+        android:hint="Bill amount"
+        android:inputType="numberDecimal"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/tvBaseLabel"
+        app:layout_constraintTop_toTopOf="@id/tvBaseLabel"
+        app:layout_constraintBottom_toBottomOf="@id/tvBaseLabel" />
+
+    <SeekBar
+        android:id="@+id/sbTip"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:max="30"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTipPercentLabel"
+        app:layout_constraintStart_toStartOf="@+id/etBaseAmount"
+        app:layout_constraintTop_toTopOf="@+id/tvTipPercentLabel" />
+
+    <TextView
+        android:id="@+id/tvTipAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTipLabel"
+        app:layout_constraintStart_toStartOf="@+id/sbTip"
+        app:layout_constraintTop_toTopOf="@+id/tvTipLabel"
+        tools:text="19.96" />
+
+    <TextView
+        android:id="@+id/tvTotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotalLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvTipAmount"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalLabel"
+        tools:text="103.11" />
 </androidx.constraintlayout.widget.ConstraintLayout>
