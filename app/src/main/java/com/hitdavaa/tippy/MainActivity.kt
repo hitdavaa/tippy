@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
 import android.widget.SeekBar
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTipAmount: TextView
     private lateinit var tvTotalAmount: TextView
     private lateinit var tvTipDescription: TextView
+    private lateinit var spinnerLanguage: Spinner
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         tvTipAmount = findViewById(R.id.tvTipAmount);
         tvTotalAmount = findViewById(R.id.tvTotalAmount);
         tvTipDescription = findViewById(R.id.tvTipDescription);
+        spinnerLanguage = findViewById(R.id.spinnerLanguage);
+
         sbTip.progress = INITIAL_TIP_PERCENT;
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%";
         updateTipDescription(INITIAL_TIP_PERCENT);
@@ -66,11 +70,9 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) {
                 Log.i(TAG, "afterTextChanged $p0");
                 computeTipAndTotal();
-
             }
-
-
         })
+
     }
 
     private fun updateTipDescription(tipPercent: Int) {
