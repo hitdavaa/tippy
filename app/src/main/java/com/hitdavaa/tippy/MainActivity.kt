@@ -1,11 +1,14 @@
 package com.hitdavaa.tippy
 
 import android.animation.ArgbEvaluator
-import android.health.connect.datatypes.units.Percentage
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Spinner
@@ -15,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import java.time.temporal.TemporalAmount
 
 private const val TAG = "MainActivity"
 private const val INITIAL_TIP_PERCENT = 15
@@ -27,6 +29,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTotalAmount: TextView
     private lateinit var tvTipDescription: TextView
     private lateinit var spinnerLanguage: Spinner
+    private lateinit var tvBaseLabel: TextView
+    private lateinit var tvTipLabel: TextView
+    private lateinit var tvTotalLabel: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -43,23 +48,59 @@ class MainActivity : AppCompatActivity() {
         tvTotalAmount = findViewById(R.id.tvTotalAmount);
         tvTipDescription = findViewById(R.id.tvTipDescription);
         spinnerLanguage = findViewById(R.id.spinnerLanguage);
+        tvBaseLabel = findViewById(R.id.tvBaseLabel);
+        tvTipLabel = findViewById(R.id.tvTipLabel);
+        tvTotalLabel = findViewById(R.id.tvTotalLabel);
 
         sbTip.progress = INITIAL_TIP_PERCENT;
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%";
-        updateTipDescription(INITIAL_TIP_PERCENT);
+        updateTipDescription(INITIAL_TIP_PERCENT, 0);
+
+        val languages = arrayOf("English","Deutsch","Magyar");
+        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, languages);
+        spinnerLanguage.adapter = arrayAdapter;
+        spinnerLanguage.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            @SuppressLint("SetTextI18n")
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(p2){
+                    0 -> {
+                        updateTipDescription(sbTip.progress, p2);
+                        etBaseAmount.hint = "Bill amount";
+                        tvBaseLabel.text =  "Bill";
+                        tvTipLabel.text = "Tip";
+                        tvTotalLabel.text = "Total";
+                    }
+                    1 -> {
+                        updateTipDescription(sbTip.progress, p2);
+                        etBaseAmount.hint = "Rechnungsbetrag";
+                        tvBaseLabel.text =  "Rechnung";
+                        tvTipLabel.text = "Trinkgeld";
+                        tvTotalLabel.text = "Gesamtpreis";
+                    }
+                    2 -> {
+                        updateTipDescription(sbTip.progress, p2);
+                        etBaseAmount.hint = "Számla ára";
+                        tvBaseLabel.text =  "Számla";
+                        tvTipLabel.text = "Borravaló";
+                        tvTotalLabel.text = "Összesen";
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
 
         sbTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 Log.i(TAG, "onProgressChanged $p1")
                 tvTipPercentLabel.text = "$p1%";
                 computeTipAndTotal();
-                updateTipDescription(p1);
+                val spinner_pos: Int = spinnerLanguage.getSelectedItemPosition()
+                updateTipDescription(p1, spinner_pos);
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
-
             override fun onStopTrackingTouch(p0: SeekBar?) {}
-
         })
 
         etBaseAmount.addTextChangedListener(object: TextWatcher {
@@ -73,15 +114,52 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+
     }
 
-    private fun updateTipDescription(tipPercent: Int) {
+    private fun updateTipDescription(tipPercent: Int, spinner_pos: Int) {
+
         var tipDescription = when(tipPercent){
-            in 0..9 -> "Poor";
-            in 10..14 -> "Acceptable";
-            in 15..20 -> "Good";
-            in 20..24 -> "Great";
-            else -> "Amazing"
+            in 0..9 ->{
+                when(spinner_pos){
+                    0 -> "Poor";
+                    1 -> "Schlecht";
+                    2 -> "Rossz";
+                    else -> "Poor";
+                }
+            }
+            in 10..14 -> {
+                when(spinner_pos){
+                    0 -> "Acceptable";
+                    1 -> "Akzeptabel";
+                    2 -> "Elfogadható";
+                    else -> "Acceptable";
+                }
+            }
+            in 15..20 -> {
+                when(spinner_pos){
+                    0 -> "Good";
+                    1 -> "Gut";
+                    2 -> "Jó";
+                    else -> "Good";
+                }
+            };
+            in 20..24 -> {
+                when(spinner_pos){
+                    0 -> "Great";
+                    1 -> "Exzellent";
+                    2 -> "Kiváló";
+                    else -> "Great";
+                }
+            };
+            else -> {
+                when(spinner_pos){
+                    0 -> "Amazing";
+                    1 -> "Wunderbar";
+                    2 -> "Elképesztő";
+                    else -> "Amazing";
+                }
+            };
         }
         tvTipDescription.text = tipDescription;
         val color = ArgbEvaluator().evaluate(

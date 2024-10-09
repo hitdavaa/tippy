@@ -118,11 +118,12 @@
 
     <Spinner
         android:id="@+id/spinnerLanguage"
-        android:layout_width="108dp"
-        android:layout_height="41dp"
+        android:layout_width="168dp"
+        android:layout_height="44dp"
         android:layout_marginTop="32dp"
         android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="@+id/tvTotalLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvTotalLabel" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalAmount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
