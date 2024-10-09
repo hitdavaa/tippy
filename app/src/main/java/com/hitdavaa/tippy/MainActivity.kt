@@ -114,6 +114,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        //TODO: implement split price by n people
 
     }
 
