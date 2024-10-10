@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%";
         updateTipDescription(INITIAL_TIP_PERCENT, 0);
 
-        val languages = arrayOf("English","Deutsch","Magyar");
+        val languages = arrayOf("English","Deutsch","Magyar","Pirate");
         val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, languages);
         spinnerLanguage.adapter = arrayAdapter;
         spinnerLanguage.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
@@ -83,6 +83,13 @@ class MainActivity : AppCompatActivity() {
                         tvBaseLabel.text =  "Számla";
                         tvTipLabel.text = "Borravaló";
                         tvTotalLabel.text = "Összesen";
+                    }
+                    3 -> {
+                        updateTipDescription(sbTip.progress, p2);
+                        etBaseAmount.hint = "How much ye owe";
+                        tvBaseLabel.text =  "Ye owe";
+                        tvTipLabel.text = "Booty coin";
+                        tvTotalLabel.text = "Yer givin'";
                     }
                 }
             }
@@ -126,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> "Poor";
                     1 -> "Schlecht";
                     2 -> "Rossz";
+                    3 -> "Bloody robbery";
                     else -> "Poor";
                 }
             }
@@ -134,6 +142,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> "Acceptable";
                     1 -> "Akzeptabel";
                     2 -> "Elfogadható";
+                    3 -> "Had worse";
                     else -> "Acceptable";
                 }
             }
@@ -142,6 +151,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> "Good";
                     1 -> "Gut";
                     2 -> "Jó";
+                    3 -> "Yer alright mate";
                     else -> "Good";
                 }
             };
@@ -150,6 +160,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> "Great";
                     1 -> "Exzellent";
                     2 -> "Kiváló";
+                    3 -> "Bloody great";
                     else -> "Great";
                 }
             };
@@ -158,6 +169,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> "Amazing";
                     1 -> "Wunderbar";
                     2 -> "Elképesztő";
+                    3 -> "Do me eyes deceive me!?";
                     else -> "Amazing";
                 }
             };
