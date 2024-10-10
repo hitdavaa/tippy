@@ -126,13 +126,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTotalAmount" />
 
-    <TextView
-        android:id="@+id/tvSplitLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Price if split by people"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="@+id/tvTotalLabel"
-        tools:layout_editor_absoluteY="386dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
