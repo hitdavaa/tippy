@@ -36,7 +36,7 @@
         android:layout_marginTop="56dp"
         android:text="Tip"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="@+id/tvBaseLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvTipPercentLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvTipPercentLabel" />
 
     <TextView
@@ -120,10 +120,67 @@
         android:id="@+id/spinnerLanguage"
         android:layout_width="168dp"
         android:layout_height="44dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="60dp"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTotalAmount" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSplitWarning" />
+
+    <TextView
+        android:id="@+id/tvSplitPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Split by this many people"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="@+id/tvTotalLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalLabel" />
+
+    <TextView
+        android:id="@+id/tvSplitTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Split total"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="@+id/tvSplitPeople"
+        app:layout_constraintTop_toBottomOf="@+id/tvSplitPeople" />
+
+    <TextView
+        android:id="@+id/tvSplitTotalNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSplitTotal"
+        app:layout_constraintStart_toEndOf="@+id/tvSplitTotal"
+        app:layout_constraintTop_toTopOf="@+id/tvSplitTotal"
+        tools:text="103.11" />
+
+    <EditText
+        android:id="@+id/etSplitPeopleNumber"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:ems="10"
+        android:hint="1"
+        android:inputType="number"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSplitPeople"
+        app:layout_constraintStart_toEndOf="@+id/tvSplitPeople"
+        app:layout_constraintTop_toTopOf="@+id/tvSplitPeople" />
+
+    <TextView
+        android:id="@+id/tvSplitWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#CF2A1E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSplitTotalNumber"
+        tools:text="Too few people!" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
