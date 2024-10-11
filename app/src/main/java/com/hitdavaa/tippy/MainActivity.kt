@@ -114,6 +114,9 @@ class MainActivity : AppCompatActivity() {
                         tvBaseLabel.text =  "Ye owe";
                         tvTipLabel.text = "Booty coin";
                         tvTotalLabel.text = "Yer givin'";
+                        tvSplitPeople.text = "This many mates payin'"
+                        tvSplitTotal. text = "Price per matey"
+                        tvSplitWarning.text = "How would that even work ye scallywag!?"
                     }
                 }
             }
