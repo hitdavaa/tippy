@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat
 
 private const val TAG = "MainActivity"
 private const val INITIAL_TIP_PERCENT = 15
+private const val INITIAL_SPLIT_NUMBER = 1
 class MainActivity : AppCompatActivity() {
     private lateinit var etBaseAmount: EditText
     private lateinit var sbTip: SeekBar
@@ -32,6 +33,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvBaseLabel: TextView
     private lateinit var tvTipLabel: TextView
     private lateinit var tvTotalLabel: TextView
+    private lateinit var tvSplitPeople: TextView
+    private lateinit var etSplitPeopleNumber: EditText
+    private lateinit var tvSplitTotal: TextView
+    private lateinit var tvSplitTotalNumber: TextView
+    private lateinit var tvSplitWarning: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,10 +58,18 @@ class MainActivity : AppCompatActivity() {
         tvBaseLabel = findViewById(R.id.tvBaseLabel);
         tvTipLabel = findViewById(R.id.tvTipLabel);
         tvTotalLabel = findViewById(R.id.tvTotalLabel);
+        tvSplitPeople = findViewById(R.id.tvSplitPeople);
+        etSplitPeopleNumber = findViewById(R.id.etSplitPeopleNumber);
+        tvSplitTotal = findViewById(R.id.tvSplitTotal);
+        tvSplitTotalNumber = findViewById(R.id.tvSplitTotalNumber);
+        tvSplitWarning = findViewById(R.id.tvSplitWarning);
 
         sbTip.progress = INITIAL_TIP_PERCENT;
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%";
         updateTipDescription(INITIAL_TIP_PERCENT, 0);
+        etSplitPeopleNumber.setText("1");
+        etSplitPeopleNumber.hint = "";
+        tvSplitWarning.visibility = View.INVISIBLE
 
         val languages = arrayOf("English","Deutsch","Magyar");
         val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, languages);
@@ -69,6 +84,9 @@ class MainActivity : AppCompatActivity() {
                         tvBaseLabel.text =  "Bill";
                         tvTipLabel.text = "Tip";
                         tvTotalLabel.text = "Total";
+                        tvSplitPeople.text = "Split by this many people"
+                        tvSplitTotal. text = "Split total"
+                        tvSplitWarning.text = "Too few people!"
                     }
                     1 -> {
                         updateTipDescription(sbTip.progress, p2);
@@ -76,6 +94,9 @@ class MainActivity : AppCompatActivity() {
                         tvBaseLabel.text =  "Rechnung";
                         tvTipLabel.text = "Trinkgeld";
                         tvTotalLabel.text = "Gesamtpreis";
+                        tvSplitPeople.text = "Rechnung geteilt durch:"
+                        tvSplitTotal. text = "Gesamtpreis aufteilen"
+                        tvSplitWarning.text = "Zu wenig Leute!"
                     }
                     2 -> {
                         updateTipDescription(sbTip.progress, p2);
@@ -83,6 +104,9 @@ class MainActivity : AppCompatActivity() {
                         tvBaseLabel.text =  "Számla";
                         tvTipLabel.text = "Borravaló";
                         tvTotalLabel.text = "Összesen";
+                        tvSplitPeople.text = "Ennyi személy fizet külön"
+                        tvSplitTotal. text = "Összesen fejenként"
+                        tvSplitWarning.text = "Túl kevés személy!"
                     }
                 }
             }
@@ -114,8 +138,34 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        //TODO: implement split price by n people
+        etSplitPeopleNumber.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                Log.i(TAG, "afterTextChanged $p0");
+                computeSplitTotal();
+            }
+        })
+
+    }
+
+    private fun computeSplitTotal() {
+        tvSplitWarning.visibility = View.INVISIBLE
+        if(etBaseAmount.text.isEmpty()||etSplitPeopleNumber.text.isEmpty()){
+            tvSplitTotalNumber.text = "";
+            return;
+        }
+        if(Integer.valueOf(etSplitPeopleNumber.text.toString()) == 0){
+            tvSplitTotalNumber.text = "";
+            tvSplitWarning.visibility = View.VISIBLE
+            return;
+        }
+        val totalSplitAmount = tvTotalAmount.text.toString().toDouble();
+        val splitPeople = etSplitPeopleNumber.text.toString().toDouble();
+        val splitTotal = totalSplitAmount/splitPeople;
+        tvSplitTotalNumber.text = "%.2f".format(splitTotal);
     }
 
     private fun updateTipDescription(tipPercent: Int, spinner_pos: Int) {
@@ -184,5 +234,6 @@ class MainActivity : AppCompatActivity() {
         val totalAmount = tipAmount + baseAmount;
         tvTipAmount.text = "%.2f".format(tipAmount);
         tvTotalAmount.text = "%.2f".format(totalAmount);
+        computeSplitTotal();
     }
 }
